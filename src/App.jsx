@@ -1171,46 +1171,40 @@ async function toggleSaved(id) {
       )}
     </div>
   </div>
+  
 )}
-<section className="contact-section" id="contact">
-  <div className="contact-content">
-    <p className="contact-label">GET IN TOUCH</p>
 
-    <h2>We'd Love to Hear From You</h2>
-
-    <p className="contact-description">
-      Have a question, suggestion, or feedback?
-      We're here to help make CampusLoop better
-      for every student.
-    </p>
-
-    <div className="contact-email">
-      <span className="contact-icon">✉</span>
-
-      <div>
-        <h3>Email Us</h3>
-        <a href="mailto:campusloop0@gmail.com">
-          campusloop0@gmail.com
-        </a>
-      </div>
+      {/* Contact Us Section */}
+      <section className="contact-section" id="contact">
+        <div className="contact-content">
+          <p className="contact-label">GET IN TOUCH</p>
+          <h2>We'd Love to Hear From You</h2>
+          <p className="contact-description">
+            Have a question, suggestion, or feedback?
+            We're here to help make CampusLoop better
+            for every student.
+          </p>
+          <div className="contact-email">
+            <span className="contact-icon">✉</span>
+            <div>
+              <h3>Email Us</h3>
+              <a href="mailto:campusloop0@gmail.com">
+                campusloop0@gmail.com
+              </a>
+            </div>
+          </div>
+          <a
+            className="contact-button"
+            href="mailto:campusloop0@gmail.com?subject=CampusLoop%20Enquiry"
+          >
+            Contact Us
+          </a>
+          <p className="contact-tagline">
+            CampusLoop — Extend. Reuse. Sustain.
+          </p>
+        </div>
+      </section>
     </div>
-
-    <a
-      className="contact-button"
-      href="mailto:campusloop0@gmail.com?subject=CampusLoop%20Enquiry"
-    >
-      Contact Us
-    </a>
-
-    <p className="contact-tagline">
-      CampusLoop — Extend. Reuse. Sustain.
-    </p>
-  </div>
-</section>
-
- 
-    </div>
-
   );
 }
 
