@@ -441,3 +441,101 @@
     min-height: 115px;
   }
 }
+
+
+/* CampusLoop Contact Section */
+
+.contact-section {
+  width: 100%;
+  padding: 64px 24px;
+  background: #f8fafc;
+  box-sizing: border-box;
+}
+
+.contact-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contact-label {
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.contact-content h2 {
+  color: #111827;
+  font-size: clamp(26px, 4vw, 36px);
+  margin: 0 0 16px;
+}
+
+.contact-description {
+  max-width: 560px;
+  margin: 0 auto 30px;
+  color: #64748b;
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+.contact-email {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 0 auto 24px;
+}
+
+.contact-icon {
+  font-size: 26px;
+  color: #2563eb;
+}
+
+.contact-email h3 {
+  margin: 0 0 6px;
+  color: #111827;
+  font-size: 17px;
+}
+
+.contact-email a {
+  color: #2563eb;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.contact-email a:hover {
+  text-decoration: underline;
+}
+
+.contact-button {
+  display: inline-block;
+  padding: 13px 28px;
+  background: #2563eb;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.contact-button:hover {
+  background: #1d4ed8;
+}
+
+.contact-tagline {
+  margin: 30px 0 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  .contact-section {
+    padding: 44px 18px;
+  }
+
+  .contact-description {
+    font-size: 15px;
+  }
+}
