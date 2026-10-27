@@ -539,3 +539,241 @@
     font-size: 15px;
   }
 }
+
+
+/* CampusLoop homepage refresh — white and green */
+
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 36px;
+  width: 100%;
+  max-width: 1190px;
+  min-height: 390px;
+  margin: 24px auto 56px;
+  padding: 48px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f5fbf5 0%, #ffffff 72%);
+  border: 1px solid #e3eee3;
+  border-radius: 24px;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-copy h1 {
+  margin: 18px 0;
+  color: #183b2b;
+  font-size: clamp(38px, 4.5vw, 58px);
+  line-height: 1.08;
+  letter-spacing: -2px;
+}
+
+.hero-copy h1 span {
+  color: #27834b;
+}
+
+.hero-copy > p {
+  max-width: 450px;
+  margin: 0;
+  color: #718077;
+  font-size: 15px;
+  line-height: 1.85;
+}
+
+.hero-copy > .primary-button {
+  margin-top: 28px;
+  border-radius: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hero-copy > .primary-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 18px rgba(39, 131, 75, 0.18);
+}
+
+.hero-art {
+  position: relative;
+  min-height: 300px;
+  width: 100%;
+}
+
+.hero-center {
+  background: #e5f5e7;
+  color: #237342;
+}
+
+.hero-product {
+  border: 1px solid #e4ece3;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 8px 24px rgba(34, 74, 44, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hero-product:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(34, 74, 44, 0.13);
+}
+
+.hero-sticker {
+  color: #34734a;
+  background: #ffffff;
+  border: 1px solid #e3eee3;
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(34, 74, 44, 0.06);
+}
+
+.marketplace-section {
+  width: 100%;
+  max-width: 1190px;
+  margin: 0 auto;
+  padding-bottom: 48px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.section-heading h2 {
+  margin: 8px 0 0;
+  color: #183b2b;
+  font-size: clamp(23px, 3vw, 30px);
+  letter-spacing: -0.7px;
+}
+
+.search-bar {
+  border-radius: 12px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-bar:focus-within {
+  border-color: #69ad7b;
+  box-shadow: 0 0 0 3px rgba(65, 151, 83, 0.09);
+}
+
+.category-chip,
+.filter-chip {
+  transition: background 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease, transform 0.2s ease;
+}
+
+.category-chip:hover,
+.filter-chip:hover {
+  transform: translateY(-1px);
+}
+
+.category-chip.active,
+.filter-chip.active {
+  background: #e5f5e7;
+  border-color: #b9dfc0;
+  color: #237342;
+}
+
+.listing-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #e7ede6;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 3px 12px rgba(30, 65, 38, 0.035);
+  transition: transform 0.22s ease, box-shadow 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.listing-card:hover {
+  transform: translateY(-4px);
+  border-color: #cfe4d0;
+  box-shadow: 0 12px 28px rgba(30, 65, 38, 0.09);
+}
+
+.listing-image {
+  overflow: hidden;
+  background-color: #eff8ef;
+}
+
+.listing-image img {
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.listing-card:hover .listing-image img {
+  transform: scale(1.04);
+}
+
+.listing-info {
+  padding: 16px;
+}
+
+.listing-info h3 {
+  color: #203b2a;
+  line-height: 1.4;
+}
+
+.listing-bottom strong {
+  color: #27834b;
+  font-size: 17px;
+}
+
+.save-button {
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.save-button:hover {
+  transform: scale(1.1);
+  color: #27834b;
+}
+
+@media (max-width: 800px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    min-height: auto;
+    padding: 32px 24px;
+    margin-top: 16px;
+  }
+
+  .hero-art {
+    min-height: 270px;
+  }
+
+  .listing-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 28px 18px;
+    border-radius: 18px;
+  }
+
+  .hero-copy h1 {
+    letter-spacing: -1px;
+  }
+
+  .hero-art {
+    transform: scale(0.92);
+    transform-origin: top center;
+    margin-bottom: -18px;
+    width: 100%;
+  }
+
+  .listing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+  }
+}
+
