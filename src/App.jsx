@@ -673,6 +673,10 @@ async function toggleSaved(id) {
               setShowForm(true);
               setMobileMenu(false);
             }}>How to sell</button>
+            <button className="nav-link" onClick={() => {
+              setMobileMenu(false);
+              document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+            }}>Contact Us</button>
           </nav>
 
           <div className="nav-actions">
@@ -1246,34 +1250,74 @@ async function toggleSaved(id) {
         </div>
       )}
 
-      {/* Contact Us Section */}
+      {/* Redesigned Contact Us Section */}
       <section className="contact-section" id="contact">
-        <div className="contact-content">
-          <p className="contact-label">GET IN TOUCH</p>
-          <h2>We'd Love to Hear From You</h2>
-          <p className="contact-description">
-            Have a question, suggestion, or feedback?
-            We're here to help make CampusLoop better
-            for every student.
-          </p>
-          <div className="contact-email">
-            <span className="contact-icon">✉</span>
-            <div>
-              <h3>Email Us</h3>
-              <a href="mailto:campusloop0@gmail.com">
-                campusloop0@gmail.com
-              </a>
+        <div className="contact-heading">
+          <div className="eyebrow">CAMPUSLOOP SUPPORT</div>
+          <h2>Let's <span>Talk</span></h2>
+          <p>Have something on your mind? We'd love to hear from you.</p>
+        </div>
+
+        <div className="contact-layout">
+          <div className="contact-info-panel">
+            <div className="eyebrow">GET IN TOUCH</div>
+            <h3>We'd Love to Hear From You</h3>
+            <p>Have a question, suggestion, or feedback? Reach out to us. We're always happy to help our campus community.</p>
+
+            <div className="contact-detail">
+              <span className="contact-detail-icon">✉</span>
+              <div>
+                <small>EMAIL US</small>
+                <a href="mailto:campusloop0@gmail.com">campusloop0@gmail.com</a>
+              </div>
             </div>
+
+            <div className="contact-detail">
+              <span className="contact-detail-icon">♧</span>
+              <div>
+                <small>OUR COMMUNITY</small>
+                <strong>Made for students, by students.</strong>
+              </div>
+            </div>
+
+            <div className="contact-panel-tagline">CampusLoop — Extend. Reuse. Sustain.</div>
           </div>
-          <a
-            className="contact-button"
-            href="mailto:campusloop0@gmail.com?subject=CampusLoop%20Enquiry"
-          >
-            Contact Us
-          </a>
-          <p className="contact-tagline">
-            CampusLoop — Extend. Reuse. Sustain.
-          </p>
+
+          <div className="contact-form-panel">
+            <h3>Send Us a Message</h3>
+            <p>Fill in the details below and we'll get back to you.</p>
+
+            <form className="campus-contact-form" onSubmit={e => {
+              e.preventDefault();
+              const data = new FormData(e.currentTarget);
+              const subject = data.get('subject');
+              const body = `Name: ${data.get('name')}\nEmail: ${data.get('email')}\nSubject: ${subject}\n\nMessage:\n${data.get('message')}`;
+              window.location.href = `mailto:campusloop0@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+              setNotice('Opening your email app to send your message.');
+            }}>
+              <label>Your Name
+                <input name="name" placeholder="Enter your name" required />
+              </label>
+              <label>Email Address
+                <input name="email" type="email" placeholder="Enter your email" required />
+              </label>
+              <label>Subject
+                <select name="subject" required defaultValue="">
+                  <option value="" disabled>Select a subject</option>
+                  <option>General Enquiry</option>
+                  <option>Feedback</option>
+                  <option>Report an Issue</option>
+                  <option>Partnership</option>
+                </select>
+              </label>
+              <label>Your Message
+                <textarea name="message" rows="4" placeholder="Write your message here..." required />
+              </label>
+              <button className="primary-button contact-submit" type="submit">
+                Send Message <ArrowRight size={16} />
+              </button>
+            </form>
+          </div>
         </div>
       </section>
     </div>
