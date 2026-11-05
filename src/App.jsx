@@ -58,6 +58,7 @@ const [inboxThreads, setInboxThreads] = useState([]);
     title: '',
     category: 'Books',
     price: '',
+    rentalPrices: {},
     condition: 'Good',
     type: 'Sale',
     location: '',
@@ -468,11 +469,24 @@ if (imageFile) {
 }
 
 
+  const rentalPrices = Object.fromEntries(
+    Object.entries(form.rentalPrices || {})
+      .filter(([key, value]) => value !== '' && Number(value) > 0)
+      .map(([key, value]) => [key, Number(value)])
+  );
+
+  if (form.type === 'Rent' && Object.keys(rentalPrices).length === 0) {
+    setBusy(false);
+    setNotice('Select at least one rental duration and enter its price.');
+    return;
+  }
+
   const listingData = {
     user_id: session.user.id,
     title: form.title.trim(),
     description: form.description.trim() || 'Contact me for more details.',
-    price: Number(form.price),
+    price: form.type === 'Rent' ? Number(Object.values(rentalPrices)[0]) : Number(form.price),
+    rental_prices: form.type === 'Rent' ? rentalPrices : {},
     category: form.category,
     listing_type: form.type.toLowerCase(),
     condition: form.condition,
@@ -490,6 +504,7 @@ if (imageFile) {
         title: listingData.title,
         description: listingData.description,
         price: listingData.price,
+        rental_prices: listingData.rental_prices,
         category: listingData.category,
         listing_type: listingData.listing_type,
         condition: listingData.condition,
@@ -529,6 +544,7 @@ if (imageFile) {
     title: '',
     category: 'Books',
     price: '',
+    rentalPrices: {},
     condition: 'Good',
     type: 'Sale',
     location: '',
@@ -545,6 +561,7 @@ if (imageFile) {
     title: item.title || '',
     category: item.category || 'Books',
     price: String(item.price ?? ''),
+    rentalPrices: item.rental_prices || {},
     condition: item.condition || 'Good',
     type: item.type || (item.listing_type === 'rent' ? 'Rent' : 'Sale'),
     location: item.location || '',
@@ -928,9 +945,11 @@ async function toggleSaved(id) {
                     {categories.slice(1).map(c => <option key={c.name}>{c.name}</option>)}
                   </select>
                 </label>
-                <label>Price (₹)
-                  <input required type="number" min="1" value={form.price} onChange={e => setForm({ ...form, price: e.target.value })} placeholder="250" />
-                </label>
+                {form.type === 'Sale' && (
+                  <label>Price (₹)
+                    <input required type="number" min="1" value={form.price} onChange={e => setForm({ ...form, price: e.target.value })} placeholder="250" />
+                  </label>
+                )}
               </div>
               <div className="form-grid">
                 <label>Listing type
@@ -944,6 +963,48 @@ async function toggleSaved(id) {
                   </select>
                 </label>
               </div>
+              {form.type === 'Rent' && (
+                <div className="rental-rate-picker">
+                  <strong>Rental pricing</strong>
+                  <p>Select every duration you want to offer and enter its price.</p>
+                  {[
+                    ['hour', 'Per hour'],
+                    ['day', 'Per day'],
+                    ['month', 'Per month'],
+                    ['semester', 'Per semester'],
+                  ].map(([key, label]) => (
+                    <div className="rental-rate-row" key={key}>
+                      <label className="rental-rate-check">
+                        <input
+                          type="checkbox"
+                          checked={Object.prototype.hasOwnProperty.call(form.rentalPrices || {}, key)}
+                          onChange={e => {
+                            const next = { ...(form.rentalPrices || {}) };
+                            if (e.target.checked) next[key] = '';
+                            else delete next[key];
+                            setForm({ ...form, rentalPrices: next });
+                          }}
+                        />
+                        {label}
+                      </label>
+                      {Object.prototype.hasOwnProperty.call(form.rentalPrices || {}, key) && (
+                        <input
+                          required
+                          type="number"
+                          min="1"
+                          placeholder="Price ₹"
+                          value={form.rentalPrices[key]}
+                          onChange={e => setForm({
+                            ...form,
+                            rentalPrices: { ...form.rentalPrices, [key]: e.target.value }
+                          })}
+                        />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+
               <label>Pickup location
                 <input value={form.location} onChange={e => setForm({ ...form, location: e.target.value })} placeholder="e.g. Academic block" />
               </label>
@@ -1003,7 +1064,18 @@ async function toggleSaved(id) {
             <div className="detail-content">
               <div className="product-category">{selected.category} · {selected.condition}</div>
               <h2>{selected.title}</h2>
-              <div className="detail-price">₹{selected.price}{selected.type === 'Rent' && <small> / rental price</small>}</div>
+              {selected.type === 'Rent' && Object.keys(selected.rental_prices || {}).length > 0 ? (
+                <div className="detail-rental-prices">
+                  {Object.entries(selected.rental_prices).map(([duration, price]) => (
+                    <div className="detail-rental-rate" key={duration}>
+                      <span>Per {duration}</span>
+                      <strong>₹{price}</strong>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="detail-price">₹{selected.price}{selected.type === 'Rent' && <small> / rental price</small>}</div>
+              )}
               <p>{selected.description}</p>
               <div className="seller-card">
                 <div className="seller-avatar">{(selected.seller || 'C').charAt(0)}</div>
