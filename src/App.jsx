@@ -1510,6 +1510,50 @@ async function toggleSaved(id) {
           </div>
         </div>
       </section>
+
+      {/* CampusLoop CTA Banner and Footer */}
+      <section className="campusloop-ending">
+        <div className="campusloop-cta">
+          <div className="campusloop-cta-copy">
+            <div className="campusloop-eyebrow">YOUR CAMPUS. YOUR MARKETPLACE.</div>
+            <h2>Make campus life more affordable.</h2>
+            <p>Buy, sell and rent essentials with fellow students. Discover great deals and give your unused items a second life.</p>
+          </div>
+          <button
+            type="button"
+            className="campusloop-cta-button"
+            onClick={() => document.getElementById('marketplace')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            Explore CampusLoop <ArrowRight size={16} />
+          </button>
+        </div>
+
+        <footer className="campus-footer">
+          <div className="campus-footer-top">
+            <a className="campus-footer-logo" href="#top" onClick={e => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}>CampusLoop<span>.</span></a>
+
+            <p className="campus-footer-tagline">A smarter marketplace for campus life.</p>
+
+            <nav className="campus-footer-nav" aria-label="Footer navigation">
+              <a href="#marketplace">Marketplace</a>
+              <a href="#how-to-use">How to Use</a>
+              <a href="#contact">Contact</a>
+            </nav>
+          </div>
+
+          <div className="campus-footer-divider"></div>
+
+          <div className="campus-footer-bottom">
+            <p>© 2026 CampusLoop. Made for students, by students.</p>
+            <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+              Back to top ↑
+            </button>
+          </div>
+        </footer>
+      </section>
     </div>
   );
 }
