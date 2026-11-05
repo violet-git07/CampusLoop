@@ -1336,25 +1336,25 @@ async function toggleSaved(id) {
 
         <div className="how-to-use-grid">
           <div className="how-to-use-card">
-            <div className="how-step">01</div>
+            <div className="how-step"><ShieldCheck size={27}/><span>01</span></div>
             <h3>Sign Up / Log In</h3>
             <p>Create an account to access the CampusLoop marketplace.</p>
           </div>
 
           <div className="how-to-use-card">
-            <div className="how-step">02</div>
+            <div className="how-step"><Search size={27}/><span>02</span></div>
             <h3>Explore Listings</h3>
             <p>Browse products, search by category and filter Sale or Rent listings.</p>
           </div>
 
           <div className="how-to-use-card">
-            <div className="how-step">03</div>
+            <div className="how-step"><Plus size={29}/><span>03</span></div>
             <h3>Sell or Rent Items</h3>
             <p>Create a listing, upload a photo, add details and set your price or rental durations.</p>
           </div>
 
           <div className="how-to-use-card">
-            <div className="how-step">04</div>
+            <div className="how-step"><MessageCircle size={27}/><span>04</span></div>
             <h3>Connect with Students</h3>
             <p>Message sellers, save favourites and manage your listings.</p>
           </div>

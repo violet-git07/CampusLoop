@@ -1096,3 +1096,107 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* CampusLoop - Premium How to Use Section */
+.how-to-use-section {
+  padding: 90px 6%;
+  background: linear-gradient(180deg, #f7fbf7 0%, #edf6ef 100%);
+  scroll-margin-top: 100px;
+}
+
+.how-to-use-heading {
+  text-align: center;
+  max-width: 650px;
+  margin: 0 auto 55px;
+}
+
+.how-to-use-heading span {
+  display: inline-block;
+  padding: 8px 17px;
+  border-radius: 30px;
+  background: #dff1e3;
+  color: #237445;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.how-to-use-heading h2 {
+  color: #173f2a;
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 800;
+  margin: 18px 0 12px;
+}
+
+.how-to-use-heading p {
+  color: #6b7e70;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.how-to-use-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.how-to-use-card {
+  position: relative;
+  background: #fff;
+  padding: 30px 23px;
+  min-height: 230px;
+  border: 1px solid #e0ebe2;
+  border-radius: 18px;
+  box-shadow: 0 8px 25px rgba(31, 76, 45, .045);
+  transition: transform .25s, box-shadow .25s;
+}
+
+.how-to-use-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 35px rgba(31, 76, 45, .11);
+}
+
+.how-step {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: #e5f4e8;
+  color: #21834b;
+  font-size: 19px;
+  font-weight: 800;
+  margin-bottom: 24px;
+}
+
+.how-to-use-card h3 {
+  color: #214b32;
+  font-size: 18px;
+  font-weight: 750;
+  margin: 0 0 12px;
+}
+
+.how-to-use-card p {
+  color: #718078;
+  font-size: 13px;
+  line-height: 1.8;
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .how-to-use-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .how-to-use-section {
+    padding: 65px 6%;
+  }
+
+  .how-to-use-grid {
+    grid-template-columns: 1fr;
+  }
+}
