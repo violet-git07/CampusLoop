@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import {
   Search, Plus, BookOpen, Laptop, Calculator, Backpack, Dumbbell,
   Armchair, Heart, ArrowRight, Leaf, ShieldCheck, MessageCircle,
-  X, MapPin, Recycle, Menu
+  X, MapPin, Recycle, Menu, Megaphone
 } from 'lucide-react';
 import { supabase } from './supabase.js';
 
@@ -48,6 +48,7 @@ const [inboxThreads, setInboxThreads] = useState([]);
   const [selected, setSelected] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
+  const [showPromote, setShowPromote] = useState(false);
   const [showContact, setShowContact] = useState(null);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [saved, setSaved] = useState([]);
@@ -695,6 +696,10 @@ async function toggleSaved(id) {
 ) : (
               <button className="sell-button" onClick={() => setShowAuth(true)}>Log in / Sign up</button>
             )}
+            <button className="sell-button promote-nav" onClick={() => {
+              setShowPromote(true);
+              setMobileMenu(false);
+            }}><Megaphone size={16} /> Promote</button>
             <button className="sell-button" onClick={() => {
               if (session) setShowForm(true);
               else setShowAuth(true);
@@ -1173,6 +1178,73 @@ async function toggleSaved(id) {
   </div>
   
 )}
+
+      {showPromote && (
+        <div className="modal-backdrop" onMouseDown={e => {
+          if (e.target === e.currentTarget) setShowPromote(false);
+        }}>
+          <div className="modal promote-modal">
+            <button className="icon-button promote-close"
+              onClick={() => setShowPromote(false)} aria-label="Close">
+              <X />
+            </button>
+
+            <div className="eyebrow"><Megaphone size={15} /> CAMPUSLOOP PROMOTE</div>
+            <h2>Give your listings more visibility.</h2>
+            <p className="promote-intro">
+              Choose a promotion plan and help more students discover your items.
+            </p>
+
+            <div className="promote-grid">
+              <div className="promote-card">
+                <span className="promote-tag">POPULAR</span>
+                <h3>Featured Listing</h3>
+                <div className="promote-price">₹29 <small>/ 7 days</small></div>
+                <p>Highlight your listing and get better visibility in the marketplace.</p>
+                <button className="primary-button" onClick={() =>
+                  setNotice('Payment integration is coming soon. No payment has been made.')
+                }>Choose Featured</button>
+              </div>
+
+              <div className="promote-card">
+                <h3>Boost to Top</h3>
+                <div className="promote-price">₹15 <small>/ one time</small></div>
+                <p>Move your listing higher in marketplace results.</p>
+                <button className="primary-button" onClick={() =>
+                  setNotice('Payment integration is coming soon. No payment has been made.')
+                }>Boost Listing</button>
+              </div>
+
+              <div className="promote-card">
+                <h3>Seller Plus</h3>
+                <div className="promote-price">₹99 <small>/ month</small></div>
+                <p>A future subscription plan for active campus sellers.</p>
+                <button className="primary-button" onClick={() =>
+                  setNotice('Seller Plus subscription is coming soon.')
+                }>Explore Plan</button>
+              </div>
+
+              <div className="promote-card coming-soon">
+                <h3><ShieldCheck size={17} /> Verified Seller</h3>
+                <div className="promote-price">Coming soon</div>
+                <p>Build trust with a seller verification badge.</p>
+                <span className="coming-label">COMING SOON</span>
+              </div>
+
+              <div className="promote-card coming-soon">
+                <h3>Campus Advertisements</h3>
+                <div className="promote-price">Coming soon</div>
+                <p>Promote campus businesses and student services.</p>
+                <span className="coming-label">COMING SOON</span>
+              </div>
+            </div>
+
+            <p className="promote-footnote">
+              Basic listings will always remain free. Paid promotions are not active yet.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Contact Us Section */}
       <section className="contact-section" id="contact">
