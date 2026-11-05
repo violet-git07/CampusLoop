@@ -1013,3 +1013,86 @@
     margin-top: 25px;
   }
 }
+
+/* Multiple rental duration pricing */
+.rental-rate-picker {
+  grid-column: 1 / -1;
+  padding: 16px;
+  background: #f4faf5;
+  border: 1px solid #dcebdd;
+  border-radius: 12px;
+}
+
+.rental-rate-picker > strong {
+  color: #214b32;
+  font-size: 14px;
+}
+
+.rental-rate-picker > p {
+  color: #718078;
+  font-size: 12px;
+  margin: 6px 0 14px;
+}
+
+.rental-rate-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border-top: 1px solid #e0ebe1;
+}
+
+.rental-rate-check {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #294b35;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.rental-rate-check input {
+  accent-color: #26804c;
+}
+
+.rental-rate-row > input {
+  width: 130px;
+  padding: 9px;
+  border: 1px solid #d5e3d7;
+  border-radius: 7px;
+}
+
+.detail-rental-prices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.detail-rental-rate {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 13px;
+  background: #f0f7f1;
+  border: 1px solid #e0ebe1;
+  border-radius: 9px;
+}
+
+.detail-rental-rate span {
+  color: #587363;
+  font-size: 12px;
+}
+
+.detail-rental-rate strong {
+  color: #176b45;
+  font-size: 15px;
+}
+
+@media(max-width: 420px) {
+  .detail-rental-prices {
+    grid-template-columns: 1fr;
+  }
+}
