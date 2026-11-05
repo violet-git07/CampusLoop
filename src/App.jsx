@@ -694,7 +694,7 @@ async function toggleSaved(id) {
               setMobileMenu(false);
               document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
             }}>Contact Us</button>
-            <button onClick={() => {
+            <button className="nav-link" onClick={() => {
               document.getElementById('how-to-use')?.scrollIntoView({ behavior: 'smooth' });
               setMobileMenu(false);
             }}>How to Use</button>
