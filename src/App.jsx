@@ -694,6 +694,10 @@ async function toggleSaved(id) {
               setMobileMenu(false);
               document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
             }}>Contact Us</button>
+            <button onClick={() => {
+              document.getElementById('how-to-use')?.scrollIntoView({ behavior: 'smooth' });
+              setMobileMenu(false);
+            }}>How to Use</button>
           </nav>
 
           <div className="nav-actions">
@@ -1321,6 +1325,41 @@ async function toggleSaved(id) {
           </div>
         </div>
       )}
+
+      {/* How to Use CampusLoop */}
+      <section className="how-to-use-section" id="how-to-use">
+        <div className="how-to-use-heading">
+          <span>GETTING STARTED</span>
+          <h2>How to Use CampusLoop</h2>
+          <p>Your campus marketplace in four simple steps.</p>
+        </div>
+
+        <div className="how-to-use-grid">
+          <div className="how-to-use-card">
+            <div className="how-step">01</div>
+            <h3>Sign Up / Log In</h3>
+            <p>Create an account to access the CampusLoop marketplace.</p>
+          </div>
+
+          <div className="how-to-use-card">
+            <div className="how-step">02</div>
+            <h3>Explore Listings</h3>
+            <p>Browse products, search by category and filter Sale or Rent listings.</p>
+          </div>
+
+          <div className="how-to-use-card">
+            <div className="how-step">03</div>
+            <h3>Sell or Rent Items</h3>
+            <p>Create a listing, upload a photo, add details and set your price or rental durations.</p>
+          </div>
+
+          <div className="how-to-use-card">
+            <div className="how-step">04</div>
+            <h3>Connect with Students</h3>
+            <p>Message sellers, save favourites and manage your listings.</p>
+          </div>
+        </div>
+      </section>
 
       {/* Redesigned Contact Us Section */}
       <section className="contact-section" id="contact">
