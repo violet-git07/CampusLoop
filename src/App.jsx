@@ -45,6 +45,8 @@ const [inboxThreads, setInboxThreads] = useState([]);
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('All items');
   const [mode, setMode] = useState('All');
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
+  const [sortBy, setSortBy] = useState('newest');
   const [selected, setSelected] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
@@ -281,7 +283,6 @@ async function sendChatMessage(e) {
     const { data, error } = await supabase
       .from('listings')
       .select('*')
-      .eq('status', 'active')
       .order('created_at', { ascending: false });
 
     if (error) {
@@ -292,6 +293,7 @@ async function sendChatMessage(e) {
 
     setItems((data || []).map(item => ({
       ...item,
+      status: item.status || 'active',
       type: item.listing_type === 'rent' ? 'Rent' : 'Sale',
       seller: item.user_id === session?.user?.id ? 'You' : 'Campus student',
       emoji: categoryEmoji[item.category] || '📦',
@@ -356,19 +358,28 @@ useEffect(() => {
 }, [showContact?.id, showContact?.chatPartnerId, session?.user?.id]);
 
 
-  const filtered = useMemo(() => items.filter(item => {
-    const matchesQuery =
-      `${item.title} ${item.category} ${item.description || ''}`
-        .toLowerCase()
-        .includes(query.toLowerCase());
+  const filtered = useMemo(() => {
+    let result = items.filter(item => {
+      const matchesQuery =
+        `${item.title} ${item.category} ${item.description || ''}`
+          .toLowerCase()
+          .includes(query.toLowerCase());
 
-    const matchesCategory =
-      category === 'All items' || item.category === category;
+      const matchesCategory =
+        category === 'All items' || item.category === category;
 
-    const matchesMode = mode === 'All' || item.type === mode;
+      const matchesMode = mode === 'All' || item.type === mode;
+      const matchesFavorite = !favoritesOnly || saved.includes(item.id);
 
-    return matchesQuery && matchesCategory && matchesMode;
-  }), [items, query, category, mode]);
+      return matchesQuery && matchesCategory && matchesMode && matchesFavorite;
+    });
+
+    if (sortBy === 'price-low') result.sort((a, b) => Number(a.price) - Number(b.price));
+    if (sortBy === 'price-high') result.sort((a, b) => Number(b.price) - Number(a.price));
+    if (sortBy === 'newest') result.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+
+    return result;
+  }, [items, query, category, mode, favoritesOnly, saved, sortBy]);
 
   async function handleAuth(e) {
     e.preventDefault();
@@ -612,6 +623,40 @@ async function deleteListing(item) {
   await loadListings();
 }
 
+async function updateListingStatus(item, nextStatus) {
+  if (!session?.user || item.user_id !== session.user.id) {
+    setNotice('You can only update your own listings.');
+    return;
+  }
+
+  setBusy(true);
+
+  const { error } = await supabase
+    .from('listings')
+    .update({ status: nextStatus })
+    .eq('id', item.id)
+    .eq('user_id', session.user.id);
+
+  setBusy(false);
+
+  if (error) {
+    setNotice('Could not update listing status: ' + error.message);
+    return;
+  }
+
+  setItems(current => current.map(listing =>
+    listing.id === item.id ? { ...listing, status: nextStatus } : listing
+  ));
+
+  setNotice(
+    nextStatus === 'active'
+      ? 'Listing is available again.'
+      : nextStatus === 'sold'
+        ? 'Listing marked as sold.'
+        : 'Listing marked as rented.'
+  );
+}
+
 async function toggleSaved(id) {
   if (!session?.user) {
     setNotice('Log in to save favourites.');
@@ -678,23 +723,38 @@ async function toggleSaved(id) {
             <button className="nav-link active" onClick={() => {
               setCategory('All items');
               setMode('All');
+              setFavoritesOnly(false);
               setMobileMenu(false);
-            }}>Explore</button>
+            }}>{'Explore'}</button>
+            <button className={favoritesOnly ? 'nav-link active' : 'nav-link'} onClick={() => {
+              setFavoritesOnly(true);
+              setMode('All');
+              setCategory('All items');
+              setMobileMenu(false);
+              document.getElementById('marketplace')?.scrollIntoView({ behavior: 'smooth' });
+            }}>
+              <Heart size={14} fill={favoritesOnly ? 'currentColor' : 'none'} />
+              Favorites ({saved.length})
+            </button>
             <button className="nav-link" onClick={() => {
+              setFavoritesOnly(false);
               setMode('Rent');
               setCategory('All items');
               setMobileMenu(false);
               document.getElementById('marketplace')?.scrollIntoView({ behavior: 'smooth' });
             }}>Rent items</button>
             <button className="nav-link" onClick={() => {
+              setFavoritesOnly(false);
               setShowForm(true);
               setMobileMenu(false);
             }}>How to sell</button>
             <button className="nav-link" onClick={() => {
+              setFavoritesOnly(false);
               setMobileMenu(false);
               document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
             }}>Contact Us</button>
             <button className="nav-link" onClick={() => {
+              setFavoritesOnly(false);
               document.getElementById('how-to-use')?.scrollIntoView({ behavior: 'smooth' });
               setMobileMenu(false);
             }}>How to Use</button>
@@ -820,11 +880,18 @@ async function toggleSaved(id) {
           </div>
 
           <div className="filter-row">
-            <span>{filtered.length} items</span>
-            <div>
-              {['All', 'Sale', 'Rent'].map(m => (
-                <button key={m} className={mode === m ? 'filter-chip active' : 'filter-chip'} onClick={() => setMode(m)}>{m}</button>
-              ))}
+            <span>{favoritesOnly ? 'Your Favorites' : `${filtered.length} items`}</span>
+            <div className="marketplace-controls">
+              <div>
+                {['All', 'Sale', 'Rent'].map(m => (
+                  <button key={m} className={mode === m ? 'filter-chip active' : 'filter-chip'} onClick={() => setMode(m)}>{m}</button>
+                ))}
+              </div>
+              <select className="sort-select" value={sortBy} onChange={e => setSortBy(e.target.value)} aria-label="Sort listings">
+                <option value="newest">Newest first</option>
+                <option value="price-low">Price: Low to high</option>
+                <option value="price-high">Price: High to low</option>
+              </select>
             </div>
           </div>
 
@@ -854,6 +921,11 @@ async function toggleSaved(id) {
                       <span className={`type-badge ${item.type === 'Rent' ? 'rent-badge' : ''}`}>
                         {item.type === 'Rent' ? 'For rent' : 'For sale'}
                       </span>
+                      {item.status !== 'active' && (
+                        <span className="availability-badge">
+                          {item.status === 'sold' ? 'SOLD' : item.status === 'rented' ? 'RENTED' : 'UNAVAILABLE'}
+                        </span>
+                      )}
                     </div>
                     <div className="listing-info">
                       <div className="product-category">{item.category} · {item.condition}</div>
@@ -876,6 +948,13 @@ async function toggleSaved(id) {
     </button>
     <button
       type="button"
+      onClick={() => updateListingStatus(item, item.status === 'active' ? (item.type === 'Rent' ? 'rented' : 'sold') : 'active')}
+      disabled={busy}
+    >
+      {item.status === 'active' ? (item.type === 'Rent' ? 'Mark Rented' : 'Mark Sold') : 'Reactivate'}
+    </button>
+    <button
+      type="button"
       onClick={() => deleteListing(item)}
       disabled={busy}
     >
@@ -885,7 +964,7 @@ async function toggleSaved(id) {
 )}
 
 
-                  <button className="save-button" onClick={() => toggleSaved(item.id)} aria-label="Save listing">
+                  <button className={saved.includes(item.id) ? 'save-button saved' : 'save-button'} onClick={() => toggleSaved(item.id)} aria-label={saved.includes(item.id) ? 'Remove from favorites' : 'Add to favorites'}>
                     <Heart size={18} fill={saved.includes(item.id) ? 'currentColor' : 'none'} />
                   </button>
                 </article>

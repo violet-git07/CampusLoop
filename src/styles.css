@@ -1224,3 +1224,75 @@
     padding: 12px;
   }
 }
+
+
+/* CampusLoop marketplace improvements */
+.nav-links .nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.save-button.saved {
+  color: #e53950 !important;
+  background: #fff !important;
+}
+
+.save-button.saved svg {
+  fill: #e53950;
+  stroke: #e53950;
+}
+
+.marketplace-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sort-select {
+  border: 1px solid #dce7dc;
+  background: white;
+  color: #43594a;
+  border-radius: 9px;
+  padding: 9px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  outline: none;
+}
+
+.sort-select:focus {
+  border-color: #79b789;
+}
+
+.availability-badge {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 2;
+  background: #263b30;
+  color: white;
+  border-radius: 5px;
+  padding: 5px 8px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .5px;
+}
+
+.listing-owner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+@media (max-width: 720px) {
+  .marketplace-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .sort-select {
+    max-width: 155px;
+  }
+}
